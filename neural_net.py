@@ -150,7 +150,7 @@ if __name__=="__main__":
 
     print("---------------------------")
     print(net.feed_forward(training[0]))
-
+    print(net.weights)
 #Notes for self and for implementing saving later
 """
 import pickle

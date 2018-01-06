@@ -1,5 +1,7 @@
 Upgrades to libraries when I'm not trying to design this to run on a 32 bit raspberry pi
 
+Some will be included for temporary/learning/reference purposes
+
 Spacy
 TensorFlow
 PyTorch

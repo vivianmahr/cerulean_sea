@@ -2,7 +2,9 @@
 GUI for processing, tagging, and storing text in an output file. Mainly used for making tagged texts.
 
 ...It would be more convenient to make this a django project huh, and more to the end of what I want it to do.
-And that would all be work using the POST and GET. 
+And that would all be work using the POST and GET.
+
+#integrate into chat.py
 """
 
 import nltk
