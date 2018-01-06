@@ -4,12 +4,45 @@ import spacy
 import emotion
 nlp = spacy.load('en')
 
-class Sentence_Processed():
+# Note to future self: things sent in emails and chats aren't always one sentence, so don't go dumping
+# whole emails in the poor sentence class without thinking
+
+class Sentence():
     """Taking all the information out of spacy's tagger and putting it into a
-       form that I can reference better and possibly alter. """
-    def __init__(self):
-        pass
+       form that I can reference better and possibly alter, plus a few more things
+       I want to consider"""
+    def __init__(self, sentence):
+        self.tokens = []
+        self.dialogue_tag = "" # not included in spacy but pretty much exactly what I was looking for
+        # darn the only training set for them is teeny, will take a while to build one up
+        #reference - https://web.stanford.edu/~jurafsky/ws97/manual.august1.html
+
+        # implementation plans:
+        # pos tagging
+        # dialogue tagging
+        # chunking / sentence structure
+        # long break as I experient generate texts and play with nlg
+
         
+        # no order atm
+        # ner
+        # srl -__-
+        
+    def tokenize(self, sentence):
+        pass
+
+class Token():
+    def __init__(self):
+        #I believe they use the word after and before for tagging input but I will check later
+        self.lemma = ''
+        self.pos = ""
+        self.tag = '' #penn tree's tags= 
+        self.dep = "" #syntattic dependency, look more at this later
+        self.shape = ""
+        self.is_alpha = False
+        self.is_stop = False
+        self.morph_features = []
+        pass
         
 opinion_keywords = {"think": "you",
                     "why": "",
