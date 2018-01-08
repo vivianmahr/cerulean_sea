@@ -1,5 +1,6 @@
 pos_tagging/output.txt
 c_sea_server/c_sea_server/s_key.py
+AI/actions/conversations/*
 
 #Copypaste python gitignores
 # Byte-compiled / optimized / DLL files

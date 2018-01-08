@@ -41,3 +41,6 @@ aap/am	Maybe/Accept-part
 qw^d	Declarative Wh-Question
 fa	Apology
 ft	Thanking
+
+Custom: 
+ig	Ignore
