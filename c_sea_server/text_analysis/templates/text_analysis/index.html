@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+<meta charset="utf-8"/>
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+	{% load static %}
+
+	<link rel="stylesheet" type="text/css" href="{% static 'text_analysis/chat.css'%}"/>
+	<script src="{% static 'text_analysis/jquery-3.2.1.min.js'%}"></script>
+	<script src="{% static 'text_analysis/basic-manip.js'%}"></script>
+
+</head>
+<body>
+	<div class="content-div">
+		<div class="chatbox-ratio-wrapper">
+			<div id="settings-div">
+
+				<div id="penn-tags-div" class="on-token-change">
+					<label for="token-change">Penn Tags:</label>
+					<select id="penn-tags" name="penn-tags-select"  class="clickable">
+						<option disabled selected value="none"> -- </option>
+						<option value='CC'>CC</option>
+						<option value='CD'>CD</option>
+						<option value='DT'>DT</option>
+						<option value='EX'>EX</option>
+						<option value='FW'>FW</option>
+						<option value='IN'>IN</option>
+						<option value='JJ'>JJ</option>
+						<option value='JJR'>JJR</option>
+						<option value='JJS'>JJS</option>
+						<option value='LS'>LS</option>
+						<option value='MD'>MD</option>
+						<option value='NN'>NN</option>
+						<option value='NNS'>NNS</option>
+						<option value='NNP'>NNP</option>
+						<option value='NNPS'>NNPS</option>
+						<option value='PDT'>PDT</option>
+						<option value='POS'>POS</option>
+						<option value='PRP'>PRP</option>
+						<option value='PRP$'>PRP$</option>
+						<option value='RB'>RB</option>
+						<option value='RBR'>RBR</option>
+						<option value='RBS'>RBS</option>
+						<option value='RP'>RP</option>
+						<option value='SYM'>SYM</option>
+						<option value='TO'>TO</option>
+						<option value='UH'>UH</option>
+						<option value='VB'>VB</option>
+						<option value='VBD'>VBD</option>
+						<option value='VBG'>VBG</option>
+						<option value='VBN'>VBN</option>
+						<option value='VBP'>VBP</option>
+						<option value='VBZ'>VBZ</option>
+						<option value='WDT'>WDT</option>
+						<option value='WP'>WP</option>
+						<option value='WP$'>WP$</option>
+						<option value='WRB'>WRB</option>
+						<option value=','>,</option>
+						<option value='.'>.</option>
+					</select> 
+				</div>
+
+				<div id="upos-tags-div" class="on-token-change">
+					<label for="token-change">UPOS Tags:</label>
+					<select id="upos-tags" name="upos-tags-select" class="clickable">
+						<option disabled selected value="none"> -- </option>
+						<option value='ADJ'>ADJ</option>
+						<option value='ADP'>ADP</option>
+						<option value='ADV'>ADV</option>
+						<option value='AUX'>AUX</option>
+						<option value='CCONJ'>CCONJ</option>
+						<option value='DET'>DET</option>
+						<option value='INTJ'>INTJ</option>
+						<option value='NOUN'>NOUN</option>
+						<option value='NUM'>NUM</option>
+						<option value='PART'>PART</option>
+						<option value='PRON'>PRON</option>
+						<option value='PROPN'>PROPN</option>
+						<option value='PUNCT'>PUNCT</option>
+						<option value='SCONJ'>SCONJ</option>
+						<option value='SYM'>SYM</option>
+						<option value='VERB'>VERB</option>
+						<option value='X'>X</option>
+					</select> 
+				</div>
+
+				<div id="dialogue-tags-div" class="on-sentence-change">
+					<label for="token-change">Dialogue Tag:</label>
+					<select id="dialogue-tag" name="dialogue-tags-select" class="clickable">
+							<option disabled selected value="none"> -- </option>
+							<option value='aa'>aa</option>
+							<option value='aap'>aap</option>
+							<option value='ad'>ad</option>
+							<option value='am'>am</option>
+							<option value='ar'>ar</option>
+							<option value='arp'>arp</option>
+							<option value='b'>b</option>
+							<option value='ba'>ba</option>
+							<option value='bc'>bc</option>
+							<option value='bd'>bd</option>
+							<option value='bf'>bf</option>
+							<option value='bh'>bh</option>
+							<option value='bk'>bk</option>
+							<option value='br'>br</option>
+							<option value='by'>by</option>
+							<option value='cc'>cc</option>
+							<option value='co'>co</option>
+							<option value='fa'>fa</option>
+							<option value='fc'>fc</option>
+							<option value='fe'>fe</option>
+							<option value='fo'>fo</option>
+							<option value='fp'>fp</option>
+							<option value='ft'>ft</option>
+							<option value='fw'>fw</option>
+							<option value='fx'>fx</option>
+							<option value='na'>na</option>
+							<option value='nd'>nd</option>
+							<option value='ng'>ng</option>
+							<option value='nn'>nn</option>
+							<option value='no'>no</option>
+							<option value='ny'>ny</option>
+							<option value='o'>o</option>
+							<option value='oo'>oo</option>
+							<option value='qh'>qh</option>
+							<option value='qo'>qo</option>
+							<option value='qr'>qr</option>
+							<option value='qrr'>qrr</option>
+							<option value='qw'>qw</option>
+							<option value='qy'>qy</option>
+							<option value='sd'>sd</option>
+							<option value='t1'>t1</option>
+							<option value='t3'>t3</option>
+							<option value='x'>x</option>
+					</select> 
+					<br/>
+						<input type="checkbox" id="^2" name="^2" value="^2"/><label>^2</label><br/>
+						<input type="checkbox" id="^c" name="^c" value="^c"/><label>^c</label><br/>
+						<input type="checkbox" id="^d" name="^d" value="^d"/><label>^d</label><br/>
+						<input type="checkbox" id="^e" name="^e" value="^e"/><label>^e</label><br/>
+						<input type="checkbox" id="^g" name="^g" value="^g"/><label>^g</label><br/>
+						<input type="checkbox" id="^h" name="^h" value="^h"/><label>^h</label><br/>
+						<input type="checkbox" id="^m" name="^m" value="^m"/><label>^m</label><br/>
+						<input type="checkbox" id="^q" name="^q" value="^q"/><label>^q</label><br/>
+						<input type="checkbox" id="^r" name="^r" value="^r"/><label>^r</label><br/>
+						<input type="checkbox" id="^t" name="^t" value="^t"/><label>^t</label><br/>
+						<input type="checkbox" id="^u" name="^u" value="^u"/><label>^u</label><br/>
+				</div>
+
+				<!--<div id="misc-feat-div">
+					<label for="truthfulness-input">Truthfulness:</label>
+					<input type="number" class="clickable" step="any" id="truthfulness-input" name="truthfulness-input" autocomplete="off" value="" max="1" min="0">	<br/>
+
+					<label for="sarcasm-input">Sarcasm:</label>
+					<select name="sarcasm-select"  class="clickable">
+						<option disabled selected value="none"> -- </option>
+						<option value="True">True</option>
+						<option value="False">False</option>
+					</select> 
+
+					<label for="sentiment-input">Sentiment:</label>
+					<select name="sentiment-select"  class="clickable">
+						<option disabled selected value="none"> -- </option>
+						<option value="-1">-1</option>
+						<option value="0">0</option>
+						<option value="1">1</option>
+					</select> 
+				</div>
+			-->
+				<p class="clickable" id="save">Save word</p>
+			</div>
+			<div id="text-div">
+				<div id="word-div">
+				</div>
+				<div id="reply-div">
+				</div>
+				<input type="text" id="text-input" name="input-text" autocomplete="off" placeholder="Input text here and hit return"><br/>
+			</div>
+
+			<div id="reference-div"> 
+				<!--Write when you can figure out the things you need to reference-->
+			</div>
+
+		</div>	
+	</div>
+</body>
+
+</html>
+
+<!--
+
+	"pbank_tags	" : [('This', ''), ('is', ''), ('a', ''), ('sample', ''), ('sentence', ''), ('.', '')],
+	"upos_tags" : [('This', ''), ('is', ''), ('a', ''), ('sample', ''), ('sentence', ''), ('.', '')],
+	
+	"dialogue_tag" : "",
+	"truthfulness" : .5, 
+	"is_sarcasm" : 0,
+	"sentiment" : "",
+-->

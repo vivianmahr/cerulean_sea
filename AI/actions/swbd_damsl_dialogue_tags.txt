@@ -1,46 +1,60 @@
-sd	Statement-non-opinion
-b	Acknowledge (Backchannel) 
-sv	Statement-opinion
-aa	Agree/Accept
-% -	Abandoned or Turn-Exit 
-ba	Appreciation
-qy	Yes-No-Question
-x	Non-verbal 
-ny	Yes answers 
-fc	Conventional-closing
-%	Uninterpretable
-qw	Wh-Question
-nn	No answers
-bk	Response Acknowledgement
-h	Hedge
-qy^d	Declarative Yes-No-Question 
-o,fo,bc,by,fw	Other
-bh	Backchannel in question form 
-^q	Quotation
-bf	Summarize/reformulate
-na,ny^e	Affirmative non-yes answers
-ad	Action-directive 
-^2	Collaborative Completion
-b^m	Repeat-phrase
-qo	Open-Question
-qh	Rhetorical-Questions
-^h	Hold before answer/agreement
-ar	Reject
-ng,nn^e	Negative non-no answers
-br	Signal-non-understanding
-no	Other answers
-fp	Conventional-opening
-qrr	Or-Clause
-arp,nd	Dispreferred answers
-t3	3rd-party-talk 
-oo,cc,co	Offers, Options Commits
-t1	Self-talk
-bd	Downplayer
-aap/am	Maybe/Accept-part
-^g	Tag-Question
-qw^d	Declarative Wh-Question
-fa	Apology
-ft	Thanking
+aa
+aap
+ad
+am
+ar
+arp
+b
+b^m
+ba
+bc
+bd
+bf
+bh
+bk
+br
+by
+cc
+co
+fa
+fc
+fe
+fo
+fp
+ft
+fw
+fx
+na
+nd
+ng
+nn
+no
+ny
+o
+oo
+qh
+qo
+qr
+qrr
+qw
+qy
+sd
+t1
+t3
+x
 
-Custom: 
-ig	Ignore
+
+^u
+^2
+^c
+^d
+^e
+^g
+^h
+^m
+^q
+^r
+^t
+
+
+SV is omitted

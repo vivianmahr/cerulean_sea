@@ -1,2 +1,2 @@
 # cerulean_sea
-Long-term side project of making a chatbot with memory and SRL using neural nets. 
+1/3 chatbot, 2/3 personal playground for natural language processing. 

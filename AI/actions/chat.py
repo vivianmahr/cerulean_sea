@@ -2,27 +2,24 @@ import random
 import nltk
 import re
 from os import listdir
-#import spacy
+import spacy
 import json
 #import emotion
-#nlp = spacy.load('en')
+nlp = spacy.load('en')
 
 # Note to future self: things sent in emails and chats aren't always one sentence, so don't go dumping
 # whole emails in the poor sentence class without thinking
 
 JSON_string = """
-        "conversation_id" : {},
+    "conversation_id" : {},
 	"sentence_id" : {},
 	"speaker_id" : {},
-	"speaker_name": {},
-	"text" : {},
+	"speaker_name": '{}',
+	"text" : '{}',
 	"tokens" : {},
 	"pbank_tags" : {},
 	"upos_tags" : {},
-	"dialogue_tag" : {},
-	"truthfulness" : {},
-	"is_sarcasm" : {},
-	"sentiment" : {}"""
+	"dialogue_tag" : '{}'"""
 
 
 class Misc_Features():
@@ -40,14 +37,16 @@ class Sentence():
        I want to consider"""
     def __init__(self, sentence, sentence_id, speaker_id, conversation_id, speaker_name, d_tag):
         # Original String
+        tagged = nlp(sentence)
         self.text = sentence
         self.sentence_id = sentence_id
         self.conversation_id = conversation_id
         # List of tokens - see Token on how to access individual attributes
-        self.tokens = nltk.word_tokenize(sentence)
 
-        self.pbank_tags = nltk.pos_tag(self.tokens)
-        self.upos_tags = []
+        self.tokens = [t.text for t in tagged]
+        self.pbank_tags = [(t.text, t.tag_) for t in tagged]
+        self.upos_tags = [(t.text, t.pos_) for t in tagged]
+
 
         # For future use, recording habits of users
         self.speaker_id = speaker_id
@@ -75,10 +74,8 @@ class Sentence():
 
     def to_JSON(self):
         result = JSON_string.format(self.conversation_id, self.sentence_id, 1, "vivian", self.text, self.tokens, \
-                                    self.pbank_tags, self.upos_tags, self.dialogue_tag, \
-                                    self.misc_features.truthfulness, self.misc_features.is_sarcasm, \
-                                    self.misc_features.sentiment)
-        return "{\n" + result + "\n}\n"
+                                    self.pbank_tags, self.upos_tags, self.dialogue_tag)
+        return "{\n" + result + "\n},\n"
         
 
 class Token():
@@ -98,10 +95,11 @@ class Token():
 
 
 class Conversation_Manager():
-    def __init__(self):
+    def __init__(self, convo_dir="./conversations"):
         self.shut_down = False
+        self.convo_dir = convo_dir
         
-        items = listdir("./conversations")
+        items = listdir(self.convo_dir)
         self.conversation_id = max([int(re.search("[\d]+", f).group(0)) for f in items]) + 1
         self.sentences = []
         pass
@@ -124,13 +122,15 @@ class Conversation_Manager():
         return output
 
     def save(self):
-        with open("./conversations/output_{}.txt".format(self.conversation_id), "w") as file:
+        with open(self.convo_dir + "/output_{}.txt".format(self.conversation_id), "w") as file:
             file.write(self.to_string())
 
     def to_string(self):
-        result = ""
+        result = "["
         for sentence in self.sentences:
-            result += sentence.to_JSON() + "\n"
+            result += sentence.to_JSON()
+        result = result[:-2]
+        result += "]"
         return result 
 
     def quit(self):
@@ -184,7 +184,7 @@ if __name__ == "__main__":
     while not c_manager.shut_down:
         inp = input("user: ")
         s = Sentence(inp, s_counter, 1, c_manager.conversation_id, "vivian", "")
-        print(s.to_JSON())
+        #print(s.to_JSON())
         # Here is normally where I would check tags before sending it in
         c_manager.add_sentence(s)
         response = c_manager.generate_output(inp)

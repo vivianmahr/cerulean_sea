@@ -1,0 +1,168 @@
+html, body {
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	font-family: Lato, Arial, sans-serif;
+	font-size: 14pt;
+}
+
+input, select{
+	font-family: Lato, Arial, sans-serif;
+	font-size: 14pt;	
+}
+
+html {
+	/*background: linear-gradient(#64f583 40%, #4ab9ff);*/
+	background: linear-gradient(#da91ec 20%, #4ab9ff);
+}
+
+label {
+	font-size: 10pt;
+}
+
+body {
+	background: linear-gradient(to bottom, rgba(200, 200, 200, .3), rgba(200, 200, 200, .3), 30%, transparent 30%, transparent);
+	background-size: 30px 5px;
+}
+
+
+.clickable {
+	background: #c2deff;
+	border: 2px solid #4ab9ff;
+	border-radius: 3px;
+	padding: 2px;
+}
+
+.clickable:hover {
+	background: #edc0f8;
+	border: 2px solid #da91ec;
+}
+
+.clickable:active {
+	background: #ffc2c7;
+	border: 2px solid #ff4a73;
+}
+
+.clickable.selected {
+	background: #edc0f8;
+	border: 2px solid #da91ec;
+}
+
+
+
+#word-div {
+	width: 90%;
+	height: 50%;
+	background: white;
+	padding: 10px;
+}
+
+#reply-div {
+	width: 90%;
+	height: 20%;
+	background: white;
+	padding: 10px;
+	margin-top: 20px;
+}
+
+#reply-div p {
+	margin: 0;
+}
+
+input[type=text] {
+	border: none;
+	margin-top: 20px;
+	width: 90%;
+	padding: 10px;
+}
+
+input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+	font-family: Lato, Arial, sans-serif;
+	width: 50%;	
+	-moz-appearance: textfield;
+	margin: 5px;	
+}
+
+select {
+	margin: 5px;
+	max-width: 90%;
+}
+
+.content-div {
+	position: absolute;
+	top: 0; bottom: 0; right: 0; left: 0;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;     
+}
+
+.word {
+	background: #c2deff;
+	display: inline-block;
+	float: left;
+	margin: 5px;
+}
+
+
+.chatbox-ratio-wrapper {
+	background: rgba(127, 127, 127, .2);
+	height:100%;
+	width: 80%;
+    display: flex;
+    flex-direction: row; 
+    justify-content: center; 
+    align-items: center;
+	margin: 40px;
+	overflow: hidden;
+}
+
+.chatbox-ratio-wrapper > div {
+	height: 100%;
+    display: flex;
+    flex-direction: column; 
+}
+
+#text-div {
+	width: 70%;
+    justify-content: center; 
+    align-items: center;
+}
+
+#settings-div {
+	width: 13%;
+	padding: 15px;
+	box-sizing: border-box;
+    align-items: left;
+
+}
+
+#settings-div > div {
+	background: #FFF;
+	width: 100%;
+	padding: 5px;
+	margin: 10px;
+}
+
+#reference-div {
+	width: 17%;
+	/*overflow: scroll;
+	background: white;*/
+	font-size: 12pt;
+}
+
+#reference-div p{
+	padding: 0;
+	margin: 3px;
+}
+
+#save{
+	margin: 0;
+	margin-left: 10px;
+}
