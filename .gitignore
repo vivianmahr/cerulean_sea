@@ -1,6 +1,6 @@
 pos_tagging/output.txt
-c_sea_server/c_sea_server/s_key.py
-AI/actions/conversations/*
+data_access/nets/*
+data_access/sqlite/*
 
 #Copypaste python gitignores
 # Byte-compiled / optimized / DLL files

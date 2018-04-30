@@ -1,6 +1,8 @@
 """
 The painful class that means I will probably have to write everything from scratch.
 Emotional_State should influence everything that the AI does.
+
+unused atm
 """
 
 import math, random

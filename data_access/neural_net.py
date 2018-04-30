@@ -1,45 +1,62 @@
 import numpy as np
 import pickle
+from decimal import Decimal
 
-import numpy as np
 def sigmoid(x):
-    return 1/(1+np.exp(-x))
+    return 1/(1+np.exp(-x, dtype=np.complex128))
 
 def sigmoid_derivative(x):
     return sigmoid(x)*(1-sigmoid(x))
 
-# This is going to be a disaster pile of notes until I figure things out better
-# Heavily based on http://neuralnetworksanddeeplearning.com/
-    
+def random_weighted(d):
+    items = sorted(d.items())
+    for i in range(1, len(items)):
+        items[i] = (items[i][0], items[i][1] + items[i-1][1])
+    sum_values = sum(d.values())
+    choice = sum_values * random.random()
+    for item in items:
+        if item[1] >= choice:
+            return item[0]
+    return item[-1][0]
+
 class Neural_Net():
-    def __init__(self, sizes):
-        # Numbers that influence how things learn
+    def __init__(self, sizes, learning_rate):
         # How strong the corrections on each learning cycle is
-        self.learning_rate = 0
-        # Some kind of regulization variable
-        self.l2_factor = 0
+        self.learning_rate = learning_rate
+        
         # Dropout is how often? a neuron is ignored so the others try and step in to generalize
+        # Unused as  of now
         self.dropout = 0
-        # Generally, I'm not sure where I want this set to true...
+        
+        # Generally, I'm not sure where I want this set to true but I know I'll want it at some point.
         self.use_learning_rate_decay = False 
 
         # Generate the matrices
         self.num_layers = len(sizes)
         self.sizes = sizes
-        # layer 0 is input so there's no biases stored for that layer
+        # Store all the biases for each layer
         self.biases = [np.random.randn(y, 1) for y in sizes[1:]]
-        # way of putting all the links between the neurons
+        # Store all the weights between neurons
         self.weights = [(np.random.randn(y, x)) for x, y in zip(sizes[:-1], sizes[1:])]
 
-    def feed_forward(self, data):   
+
+        #UNUSED - CONCEPTS TO LOOK INTO
+        # Dropout is how often? a neuron is ignored so the others try and step in to generalize
+        # Unused as  of now
+        self.dropout = 0
+        
+        # Generally, I'm not sure where I want this set to true but I know I'll want it at some point.
+        self.use_learning_rate_decay = False 
+
+
+    def feed_forward(self, data):
         for bias, weight in zip(self.biases, self.weights):
             data = sigmoid(np.dot(weight, data) + bias)
         return data
 
-    def stochastic_gradient_descent_train(self, training_data, epochs, mini_batch_size, eta, test_data=None):
+    def stochastic_gradient_descent_train(self, training_data, epochs, mini_batch_size, test_data=None):
         """Train the neural network using mini-batch stochastic
         gradient descent."""
-        # eta = learning rate
         # If there is test data, also test it each epoch and report back on how accurate it is
         if test_data: 
             n_test = len(test_data)
@@ -51,13 +68,16 @@ class Neural_Net():
                 training_data[k:k+mini_batch_size] for k in range(0, n, mini_batch_size)
             ]
             for mini_batch in mini_batches:
-                self.update_mini_batch(mini_batch, eta)
+                self.update_mini_batch(mini_batch)
+            print("Epoch {} complete".format(ep))
+            """
             if test_data:
                 print("Epoch {} {} / {}".format(ep, self.evaluate(test_data), n_test))
             else:
                 print("Epoch {} complete".format(ep))
-  
-    def update_mini_batch(self, mini_batch, eta):
+            """
+            
+    def update_mini_batch(self, mini_batch):
         """Update the network's weights and biases by applying
         gradient descent using backpropagation to a single mini batch.
         The "mini_batch" is a list of tuples "(x, y)", and "eta"
@@ -76,8 +96,8 @@ class Neural_Net():
             nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
             nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
         # update weights and bias where weight = old_weight - learning_rate / len(batch) * gradient_weight
-        self.weights = [w - eta/len(mini_batch) * nw for w, nw in zip(self.weights, nabla_w)]
-        self.biases = [b - eta/len(mini_batch) * nb for b, nb in zip(self.biases, nabla_b)]
+        self.weights = [w - self.learning_rate/len(mini_batch) * nw for w, nw in zip(self.weights, nabla_w)]
+        self.biases = [b - self.learning_rate/len(mini_batch) * nb for b, nb in zip(self.biases, nabla_b)]
 
 
     def backprop(self, x, y):
@@ -109,61 +129,96 @@ class Neural_Net():
             nabla_w[-l] = np.dot(delta, activations[-l-1].transpose())
         return (nabla_b, nabla_w)
 
-    def evaluate(self, test_data):
-        """Return the number of test inputs for which the neural
-        network outputs the correct result. Note that the neural
-        network's output is assumed to be the index of whichever
-        neuron in the final layer has the highest activation."""
+    def evaluate(self, test_data, breaks):
+        """Return percentage of correct result. Breaks = when there's
+        multiple pieces of information in the output and you want to
+        check each section individually.
+
+        I think breaks should generally be replaced with a comparison function
+        that determines how the end data should be read
+        """
         test_results = [(np.argmax(self.feedforward(x)), y)
                         for (x, y) in test_data]
         return sum(int(x == y) for (x, y) in test_results)
-
+		
     def cost_derivative(self, output_activations, y):
         """Return the vector of partial derivatives \partial C_x /
         \partial a for the output activations."""
         return (output_activations-y)
 
-    def save_net(self):
-        pass
+def save_net(net, name):
+    with open(name + ".pickle", "wb") as out:
+        pickle.dump(net, out)
     
-    def load_net(self):
-        pass
+def load_net(name):
+    with open(name + ".pickle", "rb") as file:
+        return pickle.load(file)
 
+
+
+
+"""
 if __name__=="__main__":
     #sample usage
-    net = Neural_Net([3,3, 2])
+    net = Neural_Net([3,5, 2], .3)
 
     training = [[0, 0, 1],
                 [0, 1, 1],
                 [1, 0, 1],
                 [1, 1, 1]]
-    answers = [[1, 0], [1, 0], [0, 1], [0, 1]]
+    answers = [[1, 0], [1, 0], [0, 1], [1, 0]]
 
+
+    
     for i in range(len(training)):
         training[i] = np.reshape(training[i], (3, 1))
         answers[i] = np.reshape(answers[i], (2, 1))
 
     inp = [(x, y) for x, y in zip(training, answers)]
-
-    print(inp)
-    net.stochastic_gradient_descent_train(inp, 1000, 2,.3)
+    net.stochastic_gradient_descent_train(inp, 1000, 2)
 
     print("---------------------------")
-    print(net.feed_forward(training[0]))
-    print(net.weights)
-#Notes for self and for implementing saving later
+    for i in range(len(training)):
+        print(net.feed_forward(training[i]))
+    print(net.evaluate(inp))
 """
-import pickle
+"""
+    #sample usage
+net = Neural_Net([3,5, 2], .3)
 
-example_dict = {1:"6",2:"2",3:"f"}
+training = [[0, 0, 1],
+            [0, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]]
+answers = [[0, 1], [1, 0], [1, 1], [0, 0]]
 
-pickle_out = open("dict.pickle","wb")
-pickle.dump(example_dict, pickle_out)
-pickle_out.close()
 
-pickle_in = open("dict.pickle","rb")
-example_dict = pickle.load(pickle_in)
 
-print(example_dict)
-print(example_dict[3])
+for i in range(len(training)):
+    training[i] = np.reshape(training[i], (3, 1))
+    answers[i] = np.reshape(answers[i], (2, 1))
+
+inp = [(x, y) for x, y in zip(training, answers)]
+net.stochastic_gradient_descent_train(inp, 5000, 2)
+
+print("---------------------------")
+for i in range(len(training)):
+    print(net.feed_forward(training[i]))
+#print(net.evaluate(inp, []))
+save_net(net, "test")
+
+
+net = load_net("test")
+
+training = [[0, 0, 1],
+            [0, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]]
+
+for i in range(len(training)):
+    training[i] = np.reshape(training[i], (3, 1))
+
+for i in range(len(training)):
+    print(net.feed_forward(training[i])) 
+
 """

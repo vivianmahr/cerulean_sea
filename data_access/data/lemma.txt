@@ -1,0 +1,6 @@
+apple
+grape
+phone
+swim
+eat
+red
