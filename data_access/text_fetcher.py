@@ -1,3 +1,5 @@
+import sqlite3
+
 class Fetcher():
     """
     Parent class for Fetcher, classes that access data stored in files or databases
@@ -28,6 +30,29 @@ class Text_Fetcher(Fetcher):
                     return True
         return False
 
+class SQLITE_Fetcher(Fetcher):
+    tables = ["pos", "stop"]
+    def __init__(self, database="./data_access/sqlite/cerulean_sea.db"):
+        self.connection = sqlite3.connect(database)
+        self.cursor = self.connection.cursor()
+            
+    def is_in(self, table, text):
+        if table not in SQLITE_Fetcher.tables:
+            raise ValueError("Table {} does not exist".format(table))
+        self.cursor.execute("SELECT * FROM {} WHERE word=?".format(table), (text,))
+        return len(self.cursor.fetchall()) > 0
+    
+    def __enter__(self):
+        return self
+        
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.connection.close()
+
+    
+"""
+database = SQLITE_Fetcher("./sqlite/cerulean_sea.db")
+print(database.is_in("stop", "all"))
+print(database.is_in("stop", "querty"))
 
 if __name__ == "__main__":
     import unittest
@@ -41,6 +66,4 @@ if __name__ == "__main__":
             with self.assertRaises(KeyError):
                 tf.is_in("que", "not")
     unittest.main()
-
-
-
+"""
