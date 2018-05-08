@@ -1,0 +1,96 @@
+auto-feedback
+    auto_positive
+    auto_negative
+    
+allo_feedback
+    allo_positive
+    allo_negative
+    feedback_elicitation
+
+turn_management
+    turn_take
+    turn_grab
+    turn_accept
+    turn_release
+    turn_assign
+    turn_keep
+
+time_management
+    stall
+    pause
+    
+discourse_structuring
+    topic_shift
+    opening
+    intraction_structuring
+    
+own_communication_management
+    repair
+    retraction
+    
+partner_communication_management
+    completion
+    correct_misspeaking
+
+social_obligations_management
+    initial_greeting
+    return_greeting
+    
+    apology
+    accept_apology
+    
+    initial_self_introduction
+    return_self_introduction
+    
+    thanking
+    accept_thanking
+    
+    initial_goodbye
+    return_goodbye
+    
+    congratulations
+    accept_congratulations
+    
+    condolence
+    accept_condolence
+    
+    compliment
+    accept_compliment
+    
+task
+    question
+        propositional_question
+            check_question
+        choice_question
+        set_question
+        
+    inform
+        answer
+            confirm
+            disconfirm
+        agreement
+        disagreement
+            correction
+    
+    offer
+        promise
+            address_request
+                accept_request
+                decline_request
+        address_suggestion
+            accept_suggestion
+            decline_suggestion
+            
+    request
+        instruct
+            address_offer
+                accept_offer
+                decline_offer
+
+feedback dependencies
+    dependence, antecedent
+
+attributes
+	certainty = certain/uncertain
+	conditionality = conditional/unconditional
+	partiality = partial/exhaustive
